@@ -1,0 +1,10 @@
+{
+    "test_samples_count": 30,
+    "baseline_blurry_psnr_db": 19.71,
+    "model_restored_psnr_db": 25.72,
+    "psnr_gain_db": 6.02,
+    "baseline_blurry_ssim": 0.6934,
+    "model_restored_ssim": 0.9331,
+    "ssim_gain": 0.2397,
+    "average_inference_time_ms": 23.06
+}
