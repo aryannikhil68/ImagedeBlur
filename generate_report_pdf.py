@@ -192,11 +192,11 @@ def generate_pdf_report(filename="Project_Report.pdf"):
     story.append(Spacer(1, 0.15*inch))
     
     # ---------------- CHAPTER 6 ----------------
-    story.append(Paragraph("6. Streamlit Frontend & Community Cloud Deployment", h1_style))
+    story.append(Paragraph("6. Streamlit Frontend & Live Cloud Deployment", h1_style))
     story.append(Paragraph(
-        "A full-stack web application was implemented using Streamlit (`app.py`). Features include JPG/PNG upload handling, preloaded test sample selection, "
-        "real-time model inference, side-by-side visual comparison, latency metrics display, and single-click high-resolution PNG export. "
-        "The application is fully configured for public deployment on Streamlit Community Cloud via GitHub.",
+        "A full-stack web application was implemented using Streamlit (`app.py`) and is deployed live on Streamlit Community Cloud at: "
+        "<b>https://imagedeblur-vdnjyxj9dn6vn3blpwrcsw.streamlit.app/</b>. Features include JPG/PNG upload handling, preloaded test sample selection, "
+        "real-time model inference (18.6 ms latency), side-by-side visual comparison, deblurring boost slider, and single-click high-resolution PNG export.",
         body_style
     ))
     

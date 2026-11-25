@@ -473,7 +473,9 @@ def create_presentation(output_path="AI_Image_Deblurring_Presentation.pptx"):
         "Single-Click Export: Downloads restored image as high-resolution PNG."
     ])
     
-    add_card(slide11, Inches(6.8), Inches(1.4), Inches(5.7), Inches(4.7), "Deployment & GitHub Repository", [
+    add_card(slide11, Inches(6.8), Inches(1.4), Inches(5.7), Inches(4.7), "Deployment & Live Web App", [
+        "Live Streamlit Application:",
+        "  https://imagedeblur-vdnjyxj9dn6vn3blpwrcsw.streamlit.app/",
         "Public GitHub Repository:",
         "  https://github.com/aryannikhil68/ImagedeBlur",
         "Streamlit Community Cloud Deployment:",
@@ -553,11 +555,11 @@ def create_presentation(output_path="AI_Image_Deblurring_Presentation.pptx"):
     ])
     
     add_card(slide13, Inches(6.9), Inches(3.2), Inches(5.2), Inches(2.8), "Project Resources & Links", [
+        "Live App: https://imagedeblur-vdnjyxj9dn6vn3blpwrcsw.streamlit.app/",
         "GitHub: https://github.com/aryannikhil68/ImagedeBlur",
         "Trained Model: DeblurNet-Lite (293,642 Params)",
         "Test Performance: +6.12 dB PSNR Gain | 0.9241 SSIM",
-        "Inference Speed: 18.6 ms on Standard CPU",
-        "Live App: Streamlit Community Cloud"
+        "Inference Speed: 18.6 ms on Standard CPU"
     ])
     
     add_speaker_script(

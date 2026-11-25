@@ -1,7 +1,11 @@
 # Step-by-Step Streamlit Community Cloud Deployment Guide
 ## AI-Based Image Deblurring Using DeblurNet-Lite
 
-This guide provides secure, step-by-step instructions to deploy your image deblurring web application live on **Streamlit Community Cloud** for free.
+> ### 🚀 Live Application URL:
+> 👉 **[https://imagedeblur-vdnjyxj9dn6vn3blpwrcsw.streamlit.app/](https://imagedeblur-vdnjyxj9dn6vn3blpwrcsw.streamlit.app/)**  
+> **Status:** Live, Operational, and Globally Accessible.
+
+This guide provides secure, step-by-step instructions to deploy and maintain your image deblurring web application live on **Streamlit Community Cloud** for free.
 
 ---
 

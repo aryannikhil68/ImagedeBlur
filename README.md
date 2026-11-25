@@ -1,15 +1,25 @@
 # AI-Based Image Deblurring Using a Custom Deep Learning Model
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://imagedeblur-vdnjyxj9dn6vn3blpwrcsw.streamlit.app/)
 [![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-orange.svg)](https://pytorch.org/)
-[![Streamlit App](https://img.shields.io/badge/Frontend-Streamlit-red.svg)](https://streamlit.io/)
 [![Hardware](https://img.shields.io/badge/Hardware-CPU--Friendly%20(4GB%20RAM)-green.svg)]()
 [![Model](https://img.shields.io/badge/Model-DeblurNet--Lite%20(293K%20Params)-brightgreen.svg)]()
 
+> ### 🌐 Live Web Application
+> **The project is live on Streamlit Community Cloud:**  
+> 👉 **[https://imagedeblur-vdnjyxj9dn6vn3blpwrcsw.streamlit.app/](https://imagedeblur-vdnjyxj9dn6vn3blpwrcsw.streamlit.app/)**
+
+---
+
 > **Final Year College Academic Group Project**  
 > **Title:** AI-Based Image Deblurring Using a Custom Deep Learning Model  
-> **Team:** 3 Students (Architect, ML Engineer, Deployment Lead)  
-> **Status:** Fully functional, demonstrable, and evaluated from scratch without pretrained weights.
+> **Team Members:**
+> - **Gautam Kumar Mishra** — Roll No: **2024PGCSCA104** (Architecture & Research Lead)
+> - **Sumit Paul** — Roll No: **2024PGCSCA013** (ML Pipeline & Training Engineer)
+> - **Rahul Bhandari** — Roll No: **2024PGCSCA037** (Evaluation, Frontend & Deployment Lead)  
+> **Program:** Master of Computer Applications (MCA) / Computer Science & Engineering  
+> **Status:** Fully deployed, demonstrable, and trained 100% from scratch without pretrained weights.
 
 ---
 
@@ -153,9 +163,10 @@ Evaluated on **30 unseen test images**:
 
 | Metric | Input Blurry Image | DeblurNet-Lite Restored | Net Gain / Improvement |
 | :--- | :---: | :---: | :---: |
-| **PSNR (Peak Signal-to-Noise)** | **19.71 dB** | **25.72 dB** | **+6.02 dB** |
-| **SSIM (Structural Similarity)** | **0.6934** | **0.9331** | **+0.2397 (+34.5%)** |
-| **Inference Latency (CPU)** | — | **~23.1 ms / image** | **Near-Real-Time (43 FPS)** |
+| **PSNR (Peak Signal-to-Noise)** | **16.18 dB** | **22.30 dB** | **+6.12 dB Net Gain!** |
+| **SSIM (Structural Similarity)** | **0.6453** | **0.9241** | **+0.2788 (+43.2%)** |
+| **Peak Sample (pair_0270)** | 16.51 dB | **23.13 dB** | **+6.63 dB Gain (0.9519 SSIM)** |
+| **Inference Latency (CPU)** | — | **~18.6 ms / image** | **Near-Real-Time (53 FPS)** |
 | **Memory Footprint (RAM)** | — | **< 380 MB** | **Zero OOM Crashes** |
 
 *Generated artifacts:*
@@ -163,21 +174,28 @@ Evaluated on **30 unseen test images**:
 - Loss Convergence Curves: `results/loss_curve.png`
 - Validation PSNR Curves: `results/psnr_curve.png`
 - Visual Comparison Grid: `results/comparison_grid.png`
+- Live Sample Comparison: `results/live_test_sample.png`
 
 ---
 
-## 9. Team Responsibilities & Presentation
+## 9. Team Responsibilities & Academic Defense
 
-- **Student 1 (Architect):** Theoretical Foundations, Degradation Physics, Model Architecture (Slides 1–4).
-- **Student 2 (ML Engineer):** Dataset Pipeline, Preprocessing, Supervised Training, L1 Loss (Slides 5–8).
-- **Student 3 (Deployment Lead):** Evaluation Metrics, Visual Comparison, Streamlit Frontend, Viva Defense (Slides 9–12).
+- **Gautam Kumar Mishra (Roll No: 2024PGCSCA104) — Architect & Lead Researcher:**
+  Theoretical Foundations, Degradation Physics $B = (I * K) + N$, Model Architecture (Slides 1–4).
+- **Sumit Paul (Roll No: 2024PGCSCA013) — ML Pipeline & Training Engineer:**
+  Dataset Pipeline, Preprocessing, Supervised Training, Compound Sobel Edge Loss (Slides 5–8).
+- **Rahul Bhandari (Roll No: 2024PGCSCA037) — Deployment Lead & Evaluator:**
+  Evaluation Metrics, Streamlit Web App, Cloud Deployment, Viva Defense (Slides 9–13).
 
-*Supporting Documents:*
-- Presentation Slides: `AI_Image_Deblurring_Presentation.pptx` (Exactly 12 slides)
-- Word-for-Word Spoken Script: `Presentation_Script.txt`
-- 65+ Professor Viva Q&A: `Project_Viva_Questions.txt`
-- Group Allocation Matrix: `Group_Task_Allocation.md`
-- Cloud Deployment Guide: `DEPLOYMENT_GUIDE.md`
+*Live Deployment & Supporting Documents:*
+- **Live Streamlit Web Application:** [https://imagedeblur-vdnjyxj9dn6vn3blpwrcsw.streamlit.app/](https://imagedeblur-vdnjyxj9dn6vn3blpwrcsw.streamlit.app/)
+- **GitHub Repository:** [https://github.com/aryannikhil68/ImagedeBlur](https://github.com/aryannikhil68/ImagedeBlur)
+- **PowerPoint Presentation:** `AI_Image_Deblurring_Presentation_v2.pptx` (Contains Intro, Slide Scripts, and Thank You Slide)
+- **Word-for-Word Spoken Script:** `Presentation_Script.txt`
+- **70 Professor Viva Q&As:** `Project_Viva_Questions.txt`
+- **Academic PDF Project Report:** `Project_Report.pdf`
+- **Group Allocation Matrix:** `Group_Task_Allocation.md`
+- **Cloud Deployment Guide:** `DEPLOYMENT_GUIDE.md`
 
 ---
 
