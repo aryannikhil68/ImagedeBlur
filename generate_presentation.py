@@ -402,13 +402,17 @@ def create_presentation(output_path="AI_Image_Deblurring_Presentation.pptx"):
         "5. Zamir et al., 'Restormer: Efficient Transformer for High-Resolution Image Restoration', CVPR 2022."
     ])
 
-    try:
-        prs.save(output_path)
-        print(f"PowerPoint Presentation successfully created: {output_path}")
-    except PermissionError:
-        alt_path = "AI_Image_Deblurring_Presentation_Final.pptx"
-        prs.save(alt_path)
-        print(f"Original file was open/locked. PowerPoint Presentation successfully created as: {alt_path}")
+    saved = False
+    for candidate in [output_path, "AI_Image_Deblurring_Presentation_v2.pptx", "AI_Image_Deblurring_Presentation_Latest.pptx"]:
+        try:
+            prs.save(candidate)
+            print(f"PowerPoint Presentation successfully created: {candidate}")
+            saved = True
+            break
+        except PermissionError:
+            continue
+    if not saved:
+        print("Warning: PowerPoint files currently open in another application.")
 
 if __name__ == "__main__":
     create_presentation()
