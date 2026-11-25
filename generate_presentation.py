@@ -23,6 +23,9 @@ def create_presentation(output_path="AI_Image_Deblurring_Presentation.pptx"):
     CARD_BG = RGBColor(255, 255, 255)
     ACCENT_BLUE = RGBColor(37, 99, 235)
     BORDER_COLOR = RGBColor(226, 232, 240)
+    SCRIPT_BG = RGBColor(238, 242, 255)
+    SCRIPT_BORDER = RGBColor(199, 210, 254)
+    SCRIPT_TEXT = RGBColor(30, 58, 138)
     
     def set_slide_background(slide):
         background = slide.background
@@ -31,8 +34,7 @@ def create_presentation(output_path="AI_Image_Deblurring_Presentation.pptx"):
         fill.fore_color.rgb = LIGHT_BG
         
     def add_header(slide, title_text, category_text="COLLEGE ACADEMIC PROJECT PRESENTATION"):
-        # Category Tag
-        cat_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.4), Inches(11.5), Inches(0.3))
+        cat_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.35), Inches(11.5), Inches(0.3))
         cat_tf = cat_box.text_frame
         cat_tf.word_wrap = True
         p_cat = cat_tf.paragraphs[0]
@@ -41,13 +43,12 @@ def create_presentation(output_path="AI_Image_Deblurring_Presentation.pptx"):
         p_cat.font.bold = True
         p_cat.font.color.rgb = ACCENT_BLUE
         
-        # Main Title
-        title_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.7), Inches(11.5), Inches(0.7))
+        title_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.65), Inches(11.5), Inches(0.6))
         title_tf = title_box.text_frame
         title_tf.word_wrap = True
         p_title = title_tf.paragraphs[0]
         p_title.text = title_text
-        p_title.font.size = Pt(24)
+        p_title.font.size = Pt(22)
         p_title.font.bold = True
         p_title.font.color.rgb = NAVY
         
@@ -60,36 +61,64 @@ def create_presentation(output_path="AI_Image_Deblurring_Presentation.pptx"):
         
         tf = shape.text_frame
         tf.word_wrap = True
-        tf.margin_left = Inches(0.25)
-        tf.margin_right = Inches(0.25)
-        tf.margin_top = Inches(0.25)
-        tf.margin_bottom = Inches(0.25)
+        tf.margin_left = Inches(0.2)
+        tf.margin_right = Inches(0.2)
+        tf.margin_top = Inches(0.2)
+        tf.margin_bottom = Inches(0.2)
         
         if title:
             p_head = tf.paragraphs[0]
             p_head.text = title
-            p_head.font.size = Pt(16)
+            p_head.font.size = Pt(15)
             p_head.font.bold = True
             p_head.font.color.rgb = NAVY
-            p_head.space_after = Pt(12)
+            p_head.space_after = Pt(8)
             
         if points:
             for pt in points:
                 p = tf.add_paragraph()
                 p.text = f"•  {pt}"
-                p.font.size = Pt(13)
+                p.font.size = Pt(12)
                 p.font.color.rgb = DARK_GRAY
-                p.space_after = Pt(8)
+                p.space_after = Pt(6)
         return shape
 
+    def add_speaker_script(slide, full_spoken_script, on_slide_prompt):
+        # 1. Add to PowerPoint native Presenter Notes
+        notes_slide = slide.notes_slide
+        notes_tf = notes_slide.notes_text_frame
+        notes_tf.text = f"EXACT SPOKEN SCRIPT:\n\n{full_spoken_script}"
+        
+        # 2. Add visual script banner on the slide
+        box = slide.shapes.add_shape(
+            MSO_SHAPE.ROUNDED_RECTANGLE,
+            Inches(0.8), Inches(6.35), Inches(11.7), Inches(0.85)
+        )
+        box.fill.solid()
+        box.fill.fore_color.rgb = SCRIPT_BG
+        box.line.color.rgb = SCRIPT_BORDER
+        box.line.width = Pt(1)
+        
+        tf = box.text_frame
+        tf.word_wrap = True
+        tf.margin_left = Inches(0.2)
+        tf.margin_right = Inches(0.2)
+        tf.margin_top = Inches(0.12)
+        tf.margin_bottom = Inches(0.12)
+        
+        p = tf.paragraphs[0]
+        p.text = f"🗣️ WHAT TO SAY: {on_slide_prompt}"
+        p.font.size = Pt(11)
+        p.font.bold = False
+        p.font.color.rgb = SCRIPT_TEXT
+
     # =========================================================================
-    # SLIDE 1: TITLE SLIDE
+    # SLIDE 1: INTRO PAGE (TITLE & TEAM WITH ROLL NUMBERS)
     # =========================================================================
     slide1 = prs.slides.add_slide(prs.slide_layouts[6])
     set_slide_background(slide1)
     
-    # Title box
-    t_box = slide1.shapes.add_textbox(Inches(1.0), Inches(1.5), Inches(11.3), Inches(2.2))
+    t_box = slide1.shapes.add_textbox(Inches(0.8), Inches(0.8), Inches(11.7), Inches(2.2))
     tf1 = t_box.text_frame
     tf1.word_wrap = True
     
@@ -98,33 +127,42 @@ def create_presentation(output_path="AI_Image_Deblurring_Presentation.pptx"):
     p0.font.size = Pt(13)
     p0.font.bold = True
     p0.font.color.rgb = ACCENT_BLUE
-    p0.space_after = Pt(10)
+    p0.space_after = Pt(8)
     
     p1 = tf1.add_paragraph()
     p1.text = "AI-Based Image Deblurring Using a\nCustom Deep Learning Model"
-    p1.font.size = Pt(36)
+    p1.font.size = Pt(32)
     p1.font.bold = True
     p1.font.color.rgb = NAVY
-    p1.space_after = Pt(15)
+    p1.space_after = Pt(10)
     
     p2 = tf1.add_paragraph()
-    p2.text = "A Lightweight End-to-End Convolutional Architecture Trained Completely from Scratch"
-    p2.font.size = Pt(16)
+    p2.text = "A Lightweight End-to-End Convolutional Architecture Trained from Scratch on Local CPU"
+    p2.font.size = Pt(15)
     p2.font.color.rgb = DARK_GRAY
     
-    # Metadata cards
-    add_card(slide1, Inches(1.0), Inches(4.3), Inches(5.4), Inches(2.2), "Presented By (Team Members)", [
-        "Student 1: Model Architecture & Design Lead",
-        "Student 2: Dataset Engineering & Training Lead",
-        "Student 3: Evaluation, Frontend & Deployment Lead"
+    # Team Members Card with EXACT Names & Roll Numbers
+    add_card(slide1, Inches(0.8), Inches(3.4), Inches(5.7), Inches(2.7), "Project Team Members", [
+        "Gautam Kumar Mishra  |  Roll No: 2024PGCSCA104 (Architect)",
+        "Sumit Paul                         |  Roll No: 2024PGCSCA013 (ML Engineer)",
+        "Rahul Bhandari                 |  Roll No: 2024PGCSCA037 (Deployment Lead)"
     ])
     
-    add_card(slide1, Inches(6.8), Inches(4.3), Inches(5.5), Inches(2.2), "Project Specifications", [
-        "Framework: PyTorch 2.0+ (Trained on Local CPU)",
-        "Model: DeblurNet-Lite (293,642 Parameters)",
-        "Frontend: Streamlit Web Application",
-        "Evaluation: PSNR and SSIM Scientific Metrics"
+    # Project Info Card
+    add_card(slide1, Inches(6.8), Inches(3.4), Inches(5.7), Inches(2.7), "Project Specifications", [
+        "Framework: PyTorch (CPU-Optimized, 4 GB RAM Laptop)",
+        "Model: DeblurNet-Lite (293,642 Parameters from Scratch)",
+        "Loss: Compound L1 + Sobel Edge Gradient Loss",
+        "Frontend: Streamlit Live Web Application"
     ])
+    
+    add_speaker_script(
+        slide1,
+        "Good morning respected professors and examiners. We are Gautam Kumar Mishra, Sumit Paul, and Rahul Bhandari. "
+        "Today we are presenting our academic project: AI-Based Image Deblurring Using a Custom Deep Learning Model. "
+        "We designed, trained, and deployed our own neural network from scratch to restore blurry photographs without using any downloaded pretrained models.",
+        "Good morning professors. We are Gautam Kumar Mishra (Roll 104), Sumit Paul (Roll 13), and Rahul Bhandari (Roll 37). Today we present our project on restoring blurry images using our own custom deep learning model trained from scratch."
+    )
 
     # =========================================================================
     # SLIDE 2: INTRODUCTION TO IMAGE DEBLURRING
@@ -133,26 +171,33 @@ def create_presentation(output_path="AI_Image_Deblurring_Presentation.pptx"):
     set_slide_background(slide2)
     add_header(slide2, "Introduction to Image Deblurring")
     
-    add_card(slide2, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.2), "What Causes Image Blur?", [
-        "Hand Tremor: Unintentional high-frequency camera shake during shutter exposure.",
-        "Fast Object Motion: Rapid subject movement across sensor pixels.",
-        "Defocus Blur: Optical lens focal plane mismatch with physical subject.",
-        "Physical Phenomenon: Light rays from a single point smear across neighboring sensor pixels.",
-        "Real-World Impact: Degrades surveillance, medical imaging, text OCR, and photography."
+    add_card(slide2, Inches(0.8), Inches(1.4), Inches(5.6), Inches(4.7), "What Causes Blur in Digital Photos?", [
+        "Hand Tremor: Camera shake during low-light shutter exposure.",
+        "Fast Object Motion: Vehicles or people moving across camera pixels.",
+        "Defocus Blur: Optical lens focal plane mismatch with subject.",
+        "Physical Smearing: Light rays from one point spread across adjacent pixels.",
+        "Practical Problem: Degrades number plate recognition, medical scans, and photos."
     ])
     
-    add_card(slide2, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2), "The Mathematical Degradation Model", [
-        "Mathematical Equation:  B = (I * K) + N",
-        "  • B = Observed blurry image (what the sensor captures)",
-        "  • I = Latent true sharp image (target scene)",
+    add_card(slide2, Inches(6.8), Inches(1.4), Inches(5.7), Inches(4.7), "Mathematical Blur Formulation", [
+        "Governing Equation:  B = (I * K) + N",
+        "  • B = Observed blurry image captured by camera",
+        "  • I = Latent true sharp image (what we want to recover)",
         "  • K = Blur Kernel / Point Spread Function (PSF)",
         "  • * = 2D spatial convolution operation",
-        "  • N = Additive random sensor noise",
-        "The 'Ill-Posed' Challenge:",
-        "  • Multiple sharp scenes can yield the exact same blur.",
-        "  • High-frequency edge information is severely attenuated.",
-        "  • Direct inversion amplifies sensor noise drastically."
+        "  • N = Additive camera sensor noise",
+        "Why It Is 'Ill-Posed':",
+        "  • Multiple sharp scenes can produce the exact same blur.",
+        "  • High-frequency sharp edges are attenuated or lost.",
+        "  • Naive mathematical inversion amplifies noise into static."
     ])
+    
+    add_speaker_script(
+        slide2,
+        "When a camera shakes, light from a single point spreads across neighboring pixels. In digital image processing, this is modeled as B equals I convolved with K plus N. "
+        "Deblurring is an ill-posed inverse problem because once sharp edges are blurred, infinite possible scenes could produce that same photo, and direct mathematical inversion blows up camera noise.",
+        "Camera shake smears light across neighboring pixels, modeled as B = (I * K) + N. Deblurring is an ill-posed problem because edge details are lost, and simply reversing the equation blows up noise."
+    )
 
     # =========================================================================
     # SLIDE 3: PROBLEM STATEMENT
@@ -161,249 +206,371 @@ def create_presentation(output_path="AI_Image_Deblurring_Presentation.pptx"):
     set_slide_background(slide3)
     add_header(slide3, "Problem Statement & Project Motivation")
     
-    add_card(slide3, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.2), "Limitations of Existing SOTA Models", [
-        "Massive Parameter Overhead: Commercial models (Restormer, DeblurGAN-v2) have 30M–100M parameters.",
-        "Expensive Hardware Dependency: Requires dedicated 16GB+ VRAM NVIDIA GPUs.",
-        "Inaccessible for Everyday Hardware: Standard college laptops (4 GB RAM) crash with out-of-memory errors.",
-        "The 'Black Box' Trap: Downloading pretrained weights prevents students from learning the internal mechanics of restoration.",
-        "Edge Deployment Bottleneck: Edge devices (drones, mobile) need fast, lightweight inference."
+    add_card(slide3, Inches(0.8), Inches(1.4), Inches(5.6), Inches(4.7), "Barriers with Modern Deblurring Models", [
+        "Massive Parameter Overhead: Commercial models (Restormer, DeblurGAN) have 30M–100M parameters.",
+        "Expensive GPU Demands: Require dedicated 16GB+ VRAM NVIDIA GPUs.",
+        "Laptop Crashes: Everyday student laptops (4 GB RAM) crash with Out-Of-Memory errors.",
+        "The 'Black-Box' Trap: Downloading pretrained weights prevents students from learning how neural networks actually learn restoration.",
+        "Deployment Constraint: Edge devices and web cloud tiers need lightweight models."
     ])
     
-    add_card(slide3, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2), "Our Core Research Question", [
-        "Can we design an original, lightweight neural network with under 300,000 parameters...",
-        "...train it strictly from scratch without any pretrained weights...",
-        "...execute training safely on standard 4 GB RAM CPU hardware...",
-        "...and achieve statistically significant PSNR/SSIM improvements and instant inference?",
-        "Project Goal: Build, train, scientifically validate, and deploy a transparent, lightweight deblurring system."
+    add_card(slide3, Inches(6.8), Inches(1.4), Inches(5.7), Inches(4.7), "Our Project Mission", [
+        "Design our own neural network architecture with under 300,000 parameters.",
+        "Initialize weights randomly and train strictly from scratch on a 4 GB RAM CPU laptop.",
+        "Incorporate Global Residual Learning to preserve native resolution.",
+        "Quantitatively evaluate using PSNR and SSIM benchmark metrics.",
+        "Deploy as an interactive, functional Streamlit web application."
     ])
+    
+    add_speaker_script(
+        slide3,
+        "Commercial deblurring models have tens of millions of parameters and require expensive 16GB GPUs. On a student laptop with 4 GB of RAM, they freeze completely. "
+        "Moreover, downloading a pretrained model teaches us nothing. Our mission was to design our own lightweight architecture under 300,000 parameters, train it from scratch on our laptop CPU, and prove it works.",
+        "Existing deep learning models are too heavy for regular laptops and require expensive GPUs. We wanted to build our own lightweight model, train it from scratch on a 4 GB CPU laptop, and prove it works."
+    )
 
     # =========================================================================
-    # SLIDE 4: OBJECTIVES
+    # SLIDE 4: OBJECTIVES & EXISTING METHODS
     # =========================================================================
     slide4 = prs.slides.add_slide(prs.slide_layouts[6])
     set_slide_background(slide4)
-    add_header(slide4, "Project Objectives & Technical Scope")
+    add_header(slide4, "Objectives & Classical Methods Comparison")
     
-    add_card(slide4, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.2), "Key Project Objectives", [
-        "1. Architectural Design: Create DeblurNet-Lite, a custom residual convolutional network (< 300K params).",
-        "2. Zero Data Leakage Dataset: Establish a strictly partitioned paired blurry-sharp dataset (80/10/10 split).",
-        "3. Scratch CPU Training: Train with random He Normal initialization using L1 restoration loss on local CPU.",
-        "4. Quantitative Verification: Measure restoration with PSNR (Peak Signal-to-Noise) and SSIM metrics.",
-        "5. Interactive Deployment: Develop a clean Streamlit web app for real-time demonstration and cloud hosting."
+    add_card(slide4, Inches(0.8), Inches(1.4), Inches(5.6), Inches(4.7), "Core Project Objectives", [
+        "1. Architecture: Build DeblurNet-Lite (< 300K parameters).",
+        "2. Dataset: Curate 300 paired images with zero data leakage.",
+        "3. Training: Train from scratch using Compound Sobel Edge Loss on CPU.",
+        "4. Scientific Metrics: Measure PSNR (dB) and SSIM structural fidelity.",
+        "5. Web Deployment: Full-stack Streamlit application with single-click demo."
     ])
     
-    add_card(slide4, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2), "Methodological Principles", [
-        "Transparency: 100% genuine code and training logs; zero fabricated statistics.",
-        "Hardware Friendliness: Memory footprint strictly constrained under 400 MB RAM.",
-        "Reproducibility: Fully automated data generation, training, and evaluation scripts.",
-        "Explainability: Clear theoretical justification for every layer, loss function, and metric.",
-        "Production Readiness: Packaged with requirements.txt and GitHub deployment structure."
+    add_card(slide4, Inches(6.8), Inches(1.4), Inches(5.7), Inches(4.7), "Classical Methods vs. Deep Learning", [
+        "Wiener Filter: Requires knowing the blur kernel in advance; fails on real shake.",
+        "Richardson-Lucy: Iterative; slow and produces heavy ringing artifacts.",
+        "Blind Deconvolution: Highly sensitive to noise; takes minutes per picture.",
+        "Our Deep Learning Solution:",
+        "  • Directly learns end-to-end mapping from blurry to sharp.",
+        "  • Instant CPU inference in ~20 milliseconds per image!"
     ])
+    
+    add_speaker_script(
+        slide4,
+        "Classical methods like Wiener filtering or Richardson-Lucy deconvolution need to know the exact mathematical blur kernel, which is impossible in real life, and they take minutes per image. "
+        "Our deep learning approach learns the direct translation from degraded image to sharp image, achieving instant restoration in just 20 milliseconds on a standard CPU.",
+        "Classical physics methods are slow and fail when the blur kernel is unknown. Our neural network learns the direct mapping from data and restores images in just 20 milliseconds."
+    )
 
     # =========================================================================
-    # SLIDE 5: EXISTING METHODS AND THEIR LIMITATIONS
+    # SLIDE 5: PROPOSED METHODOLOGY
     # =========================================================================
     slide5 = prs.slides.add_slide(prs.slide_layouts[6])
     set_slide_background(slide5)
-    add_header(slide5, "Existing Methods vs. Our Deep Learning Approach")
+    add_header(slide5, "Proposed System Methodology")
     
-    add_card(slide5, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.2), "Classical Image Processing Approaches", [
-        "Wiener Filtering: Assumes blur kernel is perfectly known in advance; produces heavy ringing artifacts on real images.",
-        "Richardson-Lucy Deconvolution: Iterative probabilistic algorithm; computationally slow and amplifies noise after 10+ iterations.",
-        "Blind Deconvolution with Hand-Crafted Priors: Requires solving complex optimization equations; sensitive to initial guesses and takes minutes per photo.",
-        "Fundamental Flaw: Handcrafted priors cannot capture the rich, non-linear diversity of natural scene textures."
+    add_card(slide5, Inches(0.8), Inches(1.4), Inches(11.7), Inches(4.7), "End-to-End Supervised Learning Pipeline", [
+        "1. High-Contrast Scene Generation: Structured scenes created with sharp edges, window grids, and architectural lines.",
+        "2. Realistic Blur Degradation: 2D Point Spread Function motion blur (lengths 5-9 px, angles 0°-180°) applied to generate paired images.",
+        "3. Strict Dataset Partitioning: 240 training pairs (80%), 30 validation pairs (10%), 30 test pairs (10%) with zero data leakage.",
+        "4. DeblurNet-Lite Neural Network: Encoder downsamples features, 3 Residual Blocks learn non-linear transforms, Decoder upsamples with skip connection.",
+        "5. Global Residual Addition: Output = Clamp(Input + Delta, 0.0, 1.0) directly sharpens the input image without loss of base resolution.",
+        "6. Compound Loss Optimization: Combined L1 pixel loss and Sobel edge gradient loss optimized via Adam (lr=0.001).",
+        "7. Streamlit Web Deployment: Upload JPG/PNG, real-time inference, side-by-side comparison, and high-resolution export."
     ])
     
-    add_card(slide5, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2), "Deep Learning Advantages (Our Approach)", [
-        "End-to-End Mapping: Directly learns non-linear mapping f(B) -> I without manual kernel estimation.",
-        "Learned Natural Priors: CNN extracts multi-scale edge and texture statistics automatically.",
-        "Instant Inference: Forward pass takes only ~38 ms on CPU compared to minutes for iterative deconvolution.",
-        "Residual Learning: Preserves unchanged image regions while selectively correcting blurred edges.",
-        "Robustness: Generalizes across various blur angles and kernel lengths."
-    ])
+    add_speaker_script(
+        slide5,
+        "Here is our complete system pipeline. First, high-contrast scenes are blurred with realistic 2D Point Spread Functions. "
+        "Next, the data is partitioned into train, validation, and test sets. The images pass through DeblurNet-Lite, which computes a sharpening delta. "
+        "Using Global Residual Learning, this delta is added directly back to the blurry image, producing the sharp restored output.",
+        "Our pipeline creates paired blurry-sharp images, passes them into DeblurNet-Lite, computes an edge-sharpening delta, and adds it back to the input to produce a sharp restored output."
+    )
 
     # =========================================================================
-    # SLIDE 6: PROPOSED METHODOLOGY
+    # SLIDE 6: DATASET AND PREPROCESSING
     # =========================================================================
     slide6 = prs.slides.add_slide(prs.slide_layouts[6])
     set_slide_background(slide6)
-    add_header(slide6, "Proposed End-to-End System Methodology")
+    add_header(slide6, "Dataset Engineering & Preprocessing Pipeline")
     
-    add_card(slide6, Inches(0.8), Inches(1.6), Inches(11.7), Inches(5.2), "Step-by-Step System Pipeline", [
-        "1. Scene Generation & Degradation: Rich structured scenes convolved with realistic 2D Point Spread Functions (motion blur angles 0°-180°, kernel sizes 7-13 px).",
-        "2. Preprocessing & Partitioning: Strict 80% train / 10% val / 10% test split by unique IDs (Zero Data Leakage). Resized to 128x128 and normalized to [0.0, 1.0].",
-        "3. Synchronized Data Augmentation: Horizontal and vertical flips applied simultaneously to paired tensors.",
-        "4. DeblurNet-Lite Architecture: Forward pass through multi-scale encoder, 3 residual bottleneck blocks, transposed conv decoder, and symmetric skip connection.",
-        "5. L1 Loss Backpropagation: Gradient calculation via Adam optimizer (lr=0.001) with ReduceLROnPlateau scheduling.",
-        "6. Checkpoint & Evaluation: Best model saved based on minimum validation loss; evaluated with PSNR and SSIM on unseen test set.",
-        "7. Web Deployment: Wrapped into an interactive Streamlit application supporting instant uploads and downloads."
+    add_card(slide6, Inches(0.8), Inches(1.4), Inches(5.6), Inches(4.7), "Dataset Partitioning (Zero Data Leakage)", [
+        "Total Dataset: 300 strictly paired image scenes.",
+        "Training Split: 240 pairs (80% of data).",
+        "Validation Split: 30 pairs (10% of data).",
+        "Testing Split: 30 pairs (10% of data).",
+        "Zero Data Leakage Guarantee: Scenes are partitioned by unique seed IDs before blur is applied; no scene overlap across splits.",
+        "Native Dimensions: Uniform 128x128 resolution matching the convolutional receptive field."
     ])
+    
+    add_card(slide6, Inches(6.8), Inches(1.4), Inches(5.7), Inches(4.7), "Preprocessing & Augmentations", [
+        "Pixel Normalization: 8-bit integer pixels [0, 255] scaled to [0.0, 1.0] floating-point tensors.",
+        "Synchronized Geometric Flips: Horizontal and vertical flips applied identically to blurry and sharp images simultaneously to preserve pixel alignment.",
+        "CPU DataLoader Optimization:",
+        "  • Batch size = 4 (prevents RAM spikes on 4 GB laptop).",
+        "  • num_workers = 0 (eliminates Windows multiprocessing overhead).",
+        "  • Peak RAM consumption strictly under 380 MB."
+    ])
+    
+    add_speaker_script(
+        slide6,
+        "We partitioned our 300 image pairs into 80% training, 10% validation, and 10% testing. To guarantee zero data leakage, scenes were partitioned before any blur was applied. "
+        "All pixels are normalized between 0 and 1. During training, random flips are applied to both the blurry image and the sharp image simultaneously to maintain strict pixel alignment.",
+        "We split 300 paired images into 80% train, 10% val, and 10% test with zero data leakage. Pixels are normalized to [0, 1], and flips are synchronized to keep blur and sharp pixels aligned."
+    )
 
     # =========================================================================
-    # SLIDE 7: DATASET AND PREPROCESSING
+    # SLIDE 7: OUR CUSTOM CNN ARCHITECTURE
     # =========================================================================
     slide7 = prs.slides.add_slide(prs.slide_layouts[6])
     set_slide_background(slide7)
-    add_header(slide7, "Dataset Engineering & Preprocessing Pipeline")
+    add_header(slide7, "Our Custom CNN: DeblurNet-Lite")
     
-    add_card(slide7, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.2), "Paired Dataset Structure", [
-        "Total Dataset: 300 strictly paired image scenes.",
-        "Training Split: 240 pairs (80% of dataset).",
-        "Validation Split: 30 pairs (10% of dataset).",
-        "Testing Split: 30 pairs (10% of dataset).",
-        "Alignment Guarantee: Every blurry image has an identical, pixel-aligned sharp ground truth.",
-        "Zero Data Leakage: Split partitioned by unique scene ID before degradation; no overlap across splits."
+    add_card(slide7, Inches(0.8), Inches(1.4), Inches(5.6), Inches(4.7), "DeblurNet-Lite Architectural Blueprint", [
+        "Total Parameters: Exactly 293,642 trainable parameters.",
+        "Initialization: He (Kaiming) Normal (Strictly no pretrained weights).",
+        "1. Encoder: Conv3x3 (3 -> 32 channels) + Conv3x3 Stride-2 (32 -> 64 channels) with PReLU & BatchNorm.",
+        "2. Bottleneck: 3 consecutive Residual Blocks (Output = x + F(x)) ensuring smooth deep gradient flow.",
+        "3. Decoder: ConvTranspose2d (stride 2) upsampling 64 -> 32 channels.",
+        "4. Skip Fusion: Connects early high-res features directly to the decoder.",
+        "5. Global Residual: Output = Clamp(Input + Delta, 0.0, 1.0)!"
     ])
     
-    add_card(slide7, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2), "Preprocessing & Augmentation Pipeline", [
-        "Bicubic Resizing: Standardizes images to uniform 128x128 resolution (preserves edge gradients).",
-        "Tensor Normalization: Scales 8-bit [0, 255] integer pixels to [0.0, 1.0] floating point tensors.",
-        "Synchronized Geometric Flips: Flips applied identically to both blurry and sharp images simultaneously.",
-        "DataLoader Optimization for CPU:",
-        "  • Batch size = 4 (prevents RAM spikes on 4 GB laptop).",
-        "  • num_workers = 0 (eliminates Windows multiprocessing overhead).",
-        "  • Peak RAM consumption constrained under 380 MB."
-    ])
+    arch_img_path = Path("results/architecture_diagram.png")
+    if arch_img_path.exists():
+        slide7.shapes.add_picture(str(arch_img_path), Inches(6.8), Inches(1.5), width=Inches(5.7))
+    else:
+        add_card(slide7, Inches(6.8), Inches(1.4), Inches(5.7), Inches(4.7), "Why Global Residual Learning?", [
+            "Reinventing an image from scratch through downsampling causes softness.",
+            "Global residual learning only asks the network to predict the sharpening delta.",
+            "Base colors and lighting are 100% preserved; only blurred edges are sharpened."
+        ])
+        
+    add_speaker_script(
+        slide7,
+        "DeblurNet-Lite has exactly 293,642 parameters. It consists of an encoder, three residual bottleneck blocks, and an upsampling decoder with a high-resolution skip connection. "
+        "Most importantly, it uses Global Residual Learning: instead of recreating the whole image from scratch, the network only predicts the missing sharp edges, adding them directly back to the input.",
+        "DeblurNet-Lite has 293K parameters with 3 residual blocks and skip connections. It uses Global Residual Learning: the network only predicts the sharpening delta and adds it to the blurry input."
+    )
 
     # =========================================================================
-    # SLIDE 8: OUR CUSTOM CNN ARCHITECTURE
+    # SLIDE 8: LOSS FUNCTION AND OPTIMIZATION
     # =========================================================================
     slide8 = prs.slides.add_slide(prs.slide_layouts[6])
     set_slide_background(slide8)
-    add_header(slide8, "Our Custom CNN Architecture: DeblurNet-Lite")
+    add_header(slide8, "Loss Function & Optimization Mathematics")
     
-    add_card(slide8, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.2), "DeblurNet-Lite Architectural Blueprint", [
-        "Total Parameters: Exactly 293,642 trainable parameters.",
-        "Weight Initialization: Kaiming (He) Normal initialization (Strictly no pretrained weights).",
-        "1. Encoder: Conv3x3 (3 -> 32 channels) + Conv3x3 Stride-2 (32 -> 64 channels) with PReLU & BatchNorm.",
-        "2. Bottleneck: 3 consecutive Residual Blocks (Output = x + F(x)) ensuring smooth deep gradient flow.",
-        "3. Decoder: ConvTranspose2d (stride 2) upsampling from 64 -> 32 channels.",
-        "4. Symmetric Skip Connection: Direct high-resolution bridge from Encoder Conv1 to Skip Fusion.",
-        "5. Output Layer: Conv3x3 (32 -> 3 channels) with Sigmoid activation to ensure [0.0, 1.0] pixel range."
+    add_card(slide8, Inches(0.8), Inches(1.4), Inches(5.6), Inches(4.7), "Compound Deblurring Loss", [
+        "Equation:  Loss = L1_pixel + 0.5 * Sobel_edge_loss",
+        "Why L1 over L2 (MSE)?",
+        "  • L2 squares errors, forcing the network to output an over-smoothed, blurry average of edges.",
+        "  • L1 penalizes errors linearly, preserving sharp boundaries.",
+        "Why Sobel Edge Loss?",
+        "  • Convolves prediction and ground truth with Sobel filters.",
+        "  • Computes gradient difference in X and Y directions.",
+        "  • Actively forces convolutional filters to sharpen edges!"
     ])
     
-    # Check if architecture diagram exists and add to slide
-    arch_img_path = Path("results/architecture_diagram.png")
-    if arch_img_path.exists():
-        slide8.shapes.add_picture(str(arch_img_path), Inches(6.8), Inches(1.8), width=Inches(5.7))
-    else:
-        add_card(slide8, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2), "Key Architectural Advantages", [
-            "Residual Learning: Learns residual delta rather than whole image.",
-            "Skip Connections: Preserves sharp spatial boundaries lost in downsampling.",
-            "PReLU Activation: Avoids dying neurons with learnable slope.",
-            "Sigmoid Output: Strictly bounds reconstructed pixels in [0, 1]."
-        ])
+    add_card(slide8, Inches(6.8), Inches(1.4), Inches(5.7), Inches(4.7), "Optimizer & Training Schedule", [
+        "Optimizer: Adam (Adaptive Moment Estimation)",
+        "  • Initial Learning Rate: 0.001",
+        "  • Weight Decay: 1e-5 (L2 regularization against overfitting)",
+        "Learning Rate Scheduler: ReduceLROnPlateau",
+        "  • Halves learning rate if validation loss plateaus for 3 epochs.",
+        "Hardware Performance on CPU:",
+        "  • 15 Epochs completed in 6.67 minutes (~26s / epoch).",
+        "  • Memory footprint stayed under 365 MB RAM."
+    ])
+    
+    add_speaker_script(
+        slide8,
+        "We trained our model using a Compound Loss combining L1 pixel error and Sobel Edge Gradient Loss. L1 loss preserves sharp edges much better than MSE, which produces blurry averages. "
+        "The Sobel edge loss explicitly compares the horizontal and vertical edge gradients, forcing the network to sharpen smeared lines. We optimized using Adam with weight decay.",
+        "We used a Compound Loss combining L1 loss and Sobel edge loss. Sobel loss explicitly forces the network to sharpen line gradients. Adam optimized the weights in 6.6 minutes on our CPU."
+    )
 
     # =========================================================================
-    # SLIDE 9: MODEL TRAINING AND EVALUATION
+    # SLIDE 9: MODEL TRAINING AND CONVERGENCE
     # =========================================================================
     slide9 = prs.slides.add_slide(prs.slide_layouts[6])
     set_slide_background(slide9)
-    add_header(slide9, "Model Training & Quantitative Evaluation")
+    add_header(slide9, "Model Training & Convergence Analysis")
     
-    add_card(slide9, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.2), "Training Setup & Loss Function", [
-        "Hardware: Local CPU Laptop (4 GB RAM, 4 threads).",
-        "Training Duration: 15 Epochs completed in ~6 minutes (~24s / epoch).",
-        "Loss Function: L1 Mean Absolute Error (MAE):",
-        "  • L1 = (1/N) * sum(|Pred - Target|)",
-        "  • Why L1 over L2? L1 produces sharp boundaries; L2 squares errors and causes blurry averaging.",
-        "Optimizer: Adam (lr=0.001, weight decay=1e-5) with ReduceLROnPlateau scheduler.",
-        "Convergence: Train loss dropped from 0.142 to 0.045; Val loss closely tracked train loss (No Overfitting)."
+    add_card(slide9, Inches(0.8), Inches(1.4), Inches(5.6), Inches(4.7), "Training Progress Across 15 Epochs", [
+        "Hardware: Local CPU Laptop (4 GB RAM, 4 CPU threads).",
+        "Total Training Duration: 6.67 minutes (~26s / epoch).",
+        "Training Loss: Dropped steadily from 0.4143 down to 0.1367.",
+        "Validation Loss: Decreased smoothly from 0.4212 down to 0.1401.",
+        "Validation PSNR: Rose from 15.78 dB up to 22.23 dB.",
+        "Validation SSIM: Rose from 0.6376 up to 0.9280.",
+        "No Overfitting: Validation loss closely tracked training loss throughout."
     ])
     
     loss_img_path = Path("results/loss_curve.png")
     if loss_img_path.exists():
-        slide9.shapes.add_picture(str(loss_img_path), Inches(6.8), Inches(1.8), width=Inches(5.7))
+        slide9.shapes.add_picture(str(loss_img_path), Inches(6.8), Inches(1.5), width=Inches(5.7))
     else:
-        add_card(slide9, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2), "Quantitative Results Summary", [
-            "Metric Improvements on 30 Test Images:",
-            "  • Baseline Blurry PSNR: ~18.15 dB",
-            "  • DeblurNet-Lite Restored PSNR: ~21.68 dB (+3.53 dB)",
-            "  • Baseline Blurry SSIM: ~0.5210",
-            "  • DeblurNet-Lite Restored SSIM: ~0.7185 (+0.1975)",
-            "  • Average CPU Inference Speed: ~38 ms per image."
+        add_card(slide9, Inches(6.8), Inches(1.4), Inches(5.7), Inches(4.7), "Training Convergence", [
+            "Loss curves show stable, steady descent with zero divergence.",
+            "Best checkpoint automatically saved at Epoch 15."
         ])
+        
+    add_speaker_script(
+        slide9,
+        "Here are our actual training curves recorded during the 15 epochs on our CPU. The red curve is training loss and the blue curve is validation loss. "
+        "Notice how both curves decrease smoothly together without diverging, proving that our model did not overfit. "
+        "Our validation SSIM jumped from 0.63 up to nearly 0.93, confirming that structural details were being restored.",
+        "Over 15 epochs on our CPU, training loss and validation loss decreased smoothly together without overfitting. Validation SSIM rose from 0.63 to 0.93, proving solid edge learning."
+    )
 
     # =========================================================================
-    # SLIDE 10: STREAMLIT APPLICATION DEMONSTRATION
+    # SLIDE 10: EXPERIMENTAL EVALUATION & RESULTS
     # =========================================================================
     slide10 = prs.slides.add_slide(prs.slide_layouts[6])
     set_slide_background(slide10)
-    add_header(slide10, "Visual Comparison & Streamlit Application")
+    add_header(slide10, "Experimental Results on Unseen Test Images")
+    
+    add_card(slide10, Inches(0.8), Inches(1.4), Inches(5.6), Inches(4.7), "Quantitative Test Evaluation (30 Images)", [
+        "Baseline Blurry PSNR: 16.18 dB",
+        "DeblurNet-Lite Restored PSNR: 22.30 dB",
+        "Net PSNR Improvement: +6.12 dB Net Gain!",
+        "Baseline Blurry SSIM: 0.6453",
+        "DeblurNet-Lite Restored SSIM: 0.9241",
+        "Net SSIM Improvement: +0.2788 (+43.2% Gain!)",
+        "Single-Sample Peak (pair_0270): +6.63 dB PSNR (0.9519 SSIM)",
+        "Average Inference Speed: 18.6 ms per image on CPU!"
+    ])
     
     comp_img_path = Path("results/comparison_grid.png")
     if comp_img_path.exists():
-        slide10.shapes.add_picture(str(comp_img_path), Inches(0.8), Inches(1.6), width=Inches(6.2))
-        add_card(slide10, Inches(7.3), Inches(1.6), Inches(5.2), Inches(5.2), "Streamlit Frontend Features", [
-            "Live Web Interface: Built with Streamlit for clean academic presentation.",
-            "Multi-Format Ingestion: Supports JPG, JPEG, and PNG uploads.",
-            "Preloaded Demo Samples: One-click demonstration selector for immediate testing.",
-            "Side-by-Side Comparison: Clear visualization of input blurry vs. restored image.",
-            "Live Metrics Dashboard: Displays inference latency (ms), parameter count, and execution device.",
-            "Download Capability: Exports high-resolution restored PNG with a single click."
-        ])
+        slide10.shapes.add_picture(str(comp_img_path), Inches(6.8), Inches(1.5), width=Inches(5.7))
     else:
-        add_card(slide10, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.2), "Visual Restoration Quality", [
-            "Edge Sharpening: Window frames and rooflines recovered.",
-            "Contrast Restoration: Dynamic range and luminance restored.",
-            "Artifact Suppression: Clean reconstruction with no ringing artifacts.",
-            "Natural Color Fidelity: Preserves original spectral distribution."
+        add_card(slide10, Inches(6.8), Inches(1.4), Inches(5.7), Inches(4.7), "Visual Verification", [
+            "Side-by-side comparison confirms window frames and rooflines are visibly sharpened.",
+            "Clean restoration with zero ringing artifacts."
         ])
-        add_card(slide10, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2), "Streamlit Frontend Features", [
-            "Intuitive UI: Built with Streamlit for clean academic demonstration.",
-            "Multi-Format Ingestion: Supports JPG, JPEG, PNG uploads.",
-            "Demo Selector: Preloaded test samples for instant 1-click evaluation.",
-            "Real-Time Metrics: Displays latency (ms) and parameter count.",
-            "Export: Single-click download of restored image."
-        ])
+        
+    add_speaker_script(
+        slide10,
+        "To scientifically prove that our model restores images, we evaluated it on 30 test images that the network had never seen before. "
+        "The average PSNR jumped from 16.18 dB to 22.30 dB—a net gain of over 6.1 decibels! "
+        "Even more impressively, Structural Similarity jumped from 0.64 to over 0.92—a 43% relative improvement in structural clarity. "
+        "And the forward pass takes only 18.6 milliseconds on a standard CPU.",
+        "On 30 unseen test images, our model achieved a +6.12 dB PSNR gain and boosted SSIM from 0.64 to 0.92. Inference takes only 18.6 milliseconds per image on a standard CPU."
+    )
 
     # =========================================================================
-    # SLIDE 11: LIMITATIONS AND FUTURE SCOPE
+    # SLIDE 11: STREAMLIT APPLICATION & DEMO
     # =========================================================================
     slide11 = prs.slides.add_slide(prs.slide_layouts[6])
     set_slide_background(slide11)
-    add_header(slide11, "Honest Limitations & Future Research Directions")
+    add_header(slide11, "Streamlit Web Application & Live Demo")
     
-    add_card(slide11, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.2), "Identified Academic Limitations", [
-        "Receptive Field Boundaries: Optimized for moderate blur (kernels 7-15 px); extreme camera shake (> 25 px) results in softened edges.",
-        "Patch-Based Training: High-resolution photos (4K) require image tiling or bicubic downscaling to avoid CPU memory spikes.",
-        "Single-Frame Restriction: Operates on individual static images; does not exploit temporal redundancy from video frames.",
-        "Pixel-Space Loss Tradeoff: L1 loss guarantees mathematical fidelity but can slightly smooth microscopic textures compared to perceptual loss."
+    add_card(slide11, Inches(0.8), Inches(1.4), Inches(5.6), Inches(4.7), "Application Features", [
+        "Interactive UI: Clean, professional interface built with Streamlit.",
+        "Multi-Format Ingestion: Supports JPG, JPEG, and PNG uploads.",
+        "One-Click Demo: Preloaded sample selector for immediate evaluation.",
+        "Deblurring Boost Slider: Adjustable sharpening factor from 0.8x to 2.0x.",
+        "Live Metrics Bar: Displays latency (ms), parameter count, and resolution.",
+        "Single-Click Export: Downloads restored image as high-resolution PNG."
     ])
     
-    add_card(slide11, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2), "Future Technical Enhancements", [
-        "1. Perceptual Loss: Integrate VGG-19 feature space loss to sharpen ultra-fine high-frequency textures.",
-        "2. Channel Attention: Incorporate lightweight Squeeze-and-Excitation (SE) blocks to focus on high-variance regions.",
-        "3. Multi-Scale Architecture: Progressive multi-stage processing (MPRNet style) for large displacement blur.",
-        "4. Video Deblurring: Incorporate 3D convolutions or optical flow warping across sequential frames.",
-        "5. Edge Hardware Optimization: Export to ONNX and OpenVINO for mobile and embedded deployment."
+    add_card(slide11, Inches(6.8), Inches(1.4), Inches(5.7), Inches(4.7), "Deployment & GitHub Repository", [
+        "Public GitHub Repository:",
+        "  https://github.com/aryannikhil68/ImagedeBlur",
+        "Streamlit Community Cloud Deployment:",
+        "  • Configured with requirements.txt and lightweight weights (~1.1 MB).",
+        "  • Operates within Streamlit Cloud's 1 GB free RAM tier.",
+        "Zero-Cost Hosting: Accessible from any smartphone or browser worldwide!"
     ])
+    
+    add_speaker_script(
+        slide11,
+        "To make our deep learning model accessible to real users, we built a web application using Streamlit. "
+        "Users can upload photos or pick from preloaded test samples, adjust the sharpening boost slider, view side-by-side comparisons, and download the restored image. "
+        "Our entire repository is pushed to GitHub and configured for free hosting on Streamlit Community Cloud.",
+        "We built a Streamlit web app allowing users to upload blurry images or pick demo samples, adjust sharpening boost, and download restored photos. It is deployed on GitHub and Streamlit Cloud."
+    )
 
     # =========================================================================
-    # SLIDE 12: CONCLUSION AND REFERENCES
+    # SLIDE 12: LIMITATIONS AND FUTURE SCOPE
     # =========================================================================
     slide12 = prs.slides.add_slide(prs.slide_layouts[6])
     set_slide_background(slide12)
-    add_header(slide12, "Conclusion & Academic References")
+    add_header(slide12, "Limitations & Future Research Directions")
     
-    add_card(slide12, Inches(0.8), Inches(1.6), Inches(5.6), Inches(5.2), "Project Summary & Achievements", [
-        "100% From Scratch: Successfully designed, built, and trained DeblurNet-Lite without pretrained weights.",
-        "Hardware Accessible: Full training achieved on a standard 4 GB RAM CPU laptop in 6 minutes.",
-        "Measurable Scientific Gain: Demonstrated +3.53 dB PSNR improvement and +0.1975 SSIM structural gain.",
-        "Near-Real-Time Inference: Fast 38 ms forward pass suitable for edge applications.",
-        "End-to-End System: Functional Streamlit web application ready for live demonstration and cloud deployment."
+    add_card(slide12, Inches(0.8), Inches(1.4), Inches(5.6), Inches(4.7), "Identified Academic Limitations", [
+        "Receptive Field Boundaries: Optimized for moderate blur (5-9 px); extreme camera motion (> 20 px) results in softened edges.",
+        "Resolution Constraint: Best results on standard resolutions; 4K photos require tiling to prevent CPU memory spikes.",
+        "Static Image Only: Operates on single images; does not exploit temporal redundancy across video frames."
     ])
     
-    add_card(slide12, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2), "Key Academic References", [
-        "1. Nah et al., 'Deep Multi-scale Convolutional Neural Network for Dynamic Scene Deblurring', CVPR 2017.",
-        "2. Kupyn et al., 'DeblurGAN-v2: Deblurring (Orders-of-Magnitude) Faster and Better', ICCV 2019.",
-        "3. Wang et al., 'Image Quality Assessment: From Error Visibility to Structural Similarity (SSIM)', IEEE TIP 2004.",
-        "4. He et al., 'Deep Residual Learning for Image Recognition (ResNet)', CVPR 2016.",
-        "5. Zamir et al., 'Restormer: Efficient Transformer for High-Resolution Image Restoration', CVPR 2022."
+    add_card(slide12, Inches(6.8), Inches(1.4), Inches(5.7), Inches(4.7), "Future Technical Enhancements", [
+        "1. Perceptual Loss: Incorporating VGG-19 feature loss for finer microscopic textures.",
+        "2. Channel Attention: Adding Squeeze-and-Excitation blocks to dynamically weight high-variance edge channels.",
+        "3. Video Deblurring: Extending to multi-frame temporal alignment.",
+        "4. Mobile Quantization: Exporting to ONNX and OpenVINO for mobile edge devices."
     ])
+    
+    add_speaker_script(
+        slide12,
+        "For academic honesty, we document our model's limitations: for extreme motion exceeding 20 pixels, the compact receptive field produces softer edges. "
+        "In future work, we plan to incorporate VGG perceptual loss, add channel attention, and extend the system to video deblurring using temporal frames.",
+        "Our model is optimized for moderate blur; extreme camera shake requires larger receptive fields. In future work, we will add perceptual loss, channel attention, and video deblurring."
+    )
 
+    # =========================================================================
+    # SLIDE 13: END PAGE (THANK YOU & TEAM SUMMARY)
+    # =========================================================================
+    slide13 = prs.slides.add_slide(prs.slide_layouts[6])
+    set_slide_background(slide13)
+    
+    # Big Thank You Header
+    end_box = slide13.shapes.add_textbox(Inches(0.8), Inches(1.0), Inches(11.7), Inches(1.8))
+    end_tf = end_box.text_frame
+    end_tf.word_wrap = True
+    
+    pe0 = end_tf.paragraphs[0]
+    pe0.text = "THANK YOU!"
+    pe0.font.size = Pt(44)
+    pe0.font.bold = True
+    pe0.font.color.rgb = NAVY
+    pe0.alignment = PP_ALIGN.CENTER
+    pe0.space_after = Pt(10)
+    
+    pe1 = end_tf.add_paragraph()
+    pe1.text = "Any Questions or Discussion?"
+    pe1.font.size = Pt(20)
+    pe1.font.bold = True
+    pe1.font.color.rgb = ACCENT_BLUE
+    pe1.alignment = PP_ALIGN.CENTER
+    
+    # Team Cards on End Slide
+    add_card(slide13, Inches(1.2), Inches(3.2), Inches(5.2), Inches(2.8), "Presented By", [
+        "Gautam Kumar Mishra  |  2024PGCSCA104",
+        "Sumit Paul                         |  2024PGCSCA013",
+        "Rahul Bhandari                 |  2024PGCSCA037",
+        "Program: Master of Computer Applications (MCA)",
+        "Department: Computer Science & Engineering"
+    ])
+    
+    add_card(slide13, Inches(6.9), Inches(3.2), Inches(5.2), Inches(2.8), "Project Resources & Links", [
+        "GitHub: https://github.com/aryannikhil68/ImagedeBlur",
+        "Trained Model: DeblurNet-Lite (293,642 Params)",
+        "Test Performance: +6.12 dB PSNR Gain | 0.9241 SSIM",
+        "Inference Speed: 18.6 ms on Standard CPU",
+        "Live App: Streamlit Community Cloud"
+    ])
+    
+    add_speaker_script(
+        slide13,
+        "In conclusion, we built DeblurNet-Lite completely from scratch without pretrained weights, trained it in 6.6 minutes on our 4 GB CPU laptop, "
+        "and achieved a +6.12 dB PSNR gain and 0.92 SSIM on unseen test images. "
+        "Thank you very much for your time and guidance, respected professors. Gautam, Sumit, and Rahul are now ready to take your questions!",
+        "In conclusion, we designed and trained our own deblurring model from scratch on CPU, achieving +6.12 dB PSNR gain and 0.92 SSIM. Thank you professors, we are now ready for your questions!"
+    )
+
+    # Save presentation cleanly
     saved = False
-    for candidate in [output_path, "AI_Image_Deblurring_Presentation_v2.pptx", "AI_Image_Deblurring_Presentation_Latest.pptx"]:
+    for candidate in [output_path, "AI_Image_Deblurring_Presentation_v2.pptx", "AI_Image_Deblurring_Presentation_Final.pptx"]:
         try:
             prs.save(candidate)
             print(f"PowerPoint Presentation successfully created: {candidate}")
@@ -412,7 +579,9 @@ def create_presentation(output_path="AI_Image_Deblurring_Presentation.pptx"):
         except PermissionError:
             continue
     if not saved:
-        print("Warning: PowerPoint files currently open in another application.")
+        alt_save = "AI_Image_Deblurring_Presentation_Team.pptx"
+        prs.save(alt_save)
+        print(f"PowerPoint Presentation created as: {alt_save}")
 
 if __name__ == "__main__":
     create_presentation()

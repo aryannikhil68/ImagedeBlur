@@ -9,18 +9,19 @@
 
 ## 1. Executive Summary & Team Roles
 
-To present a cohesive, impressive group project to your college professors, the project workload has been divided into three balanced, specialized technical domains:
-
-1. **Student 1: Lead Researcher & Architect**
+1. **Gautam Kumar Mishra (Roll No: 2024PGCSCA104) — Lead Researcher & Architect**
    - *Domain:* Mathematical Foundations, Degradation Physics, and Custom CNN Architectural Design.
+   - *Presentation:* Slides 1 to 4 (Intro, Problem, Objectives, Classical Methods).
    - *Focus:* Why deblurring is an ill-posed inverse problem, convolution mechanics, DeblurNet-Lite layer design, parameter budget, and weight initialization.
 
-2. **Student 2: Machine Learning Pipeline & Training Engineer**
+2. **Sumit Paul (Roll No: 2024PGCSCA013) — ML Pipeline & Training Engineer**
    - *Domain:* Dataset Engineering, Preprocessing, Supervised Training, and Loss Optimization.
-   - *Focus:* Paired image organization, zero data leakage guarantees, L1 vs. L2 loss dynamics, Adam optimizer, learning rate scheduling, and CPU memory optimization.
+   - *Presentation:* Slides 5 to 8 (Methodology, Dataset, Architecture, Loss & Optimization).
+   - *Focus:* Paired image organization, zero data leakage guarantees, L1 vs. L2 loss dynamics, Sobel edge loss, Adam optimizer, learning rate scheduling, and CPU memory optimization.
 
-3. **Student 3: Evaluation, Frontend Developer & Deployment Lead**
+3. **Rahul Bhandari (Roll No: 2024PGCSCA037) — Evaluation, Frontend Developer & Deployment Lead**
    - *Domain:* Scientific Metrics (PSNR/SSIM), Visual Validation, Streamlit Application, and Viva Defense.
+   - *Presentation:* Slides 9 to 13 (Training Results, Test Benchmark, Live Demo, Limitations, Thank You).
    - *Focus:* Peak Signal-to-Noise Ratio (dB), Structural Similarity Index, side-by-side comparison visualization, Streamlit UI implementation, and Community Cloud deployment.
 
 ---

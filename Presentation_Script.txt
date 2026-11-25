@@ -2,31 +2,31 @@
 AI-BASED IMAGE DEBLURRING USING A CUSTOM DEEP LEARNING MODEL
 COLLEGE PROJECT PRESENTATION SCRIPT (WORD-FOR-WORD SPOKEN SCRIPT)
 ================================================================================
-Target Duration: 12 - 15 Minutes (1 to 1.5 minutes per slide)
-Team Size: 3 Members
-Division:
-- Speaker 1 (Student 1): Slides 1 to 4 (Introduction, Problem, Objectives, Existing Methods)
-- Speaker 2 (Student 2): Slides 5 to 8 (Proposed Methodology, Dataset, Architecture, Math)
-- Speaker 3 (Student 3): Slides 9 to 12 (Training Results, Live Demo, Limitations, Conclusion)
+Target Duration: 12 - 15 Minutes
+Team Members:
+- Speaker 1: Gautam Kumar Mishra (Roll No: 2024PGCSCA104) -> Slides 1 to 4
+- Speaker 2: Sumit Paul          (Roll No: 2024PGCSCA013) -> Slides 5 to 8
+- Speaker 3: Rahul Bhandari      (Roll No: 2024PGCSCA037) -> Slides 9 to 13
 ================================================================================
 
 --------------------------------------------------------------------------------
-SLIDE 1: TITLE SLIDE
+SLIDE 1: TITLE SLIDE (INTRO PAGE)
 --------------------------------------------------------------------------------
 [SLIDE CONTENT]:
 Project Title: AI-Based Image Deblurring Using a Custom Deep Learning Model
 Subtitle: Lightweight End-to-End Image Restoration Trained from Scratch
-Presented by: [Student 1 Name], [Student 2 Name], [Student 3 Name]
-Department: Computer Science & Engineering / Information Technology
-Guide / Mentor: [Professor Name]
+Team Members:
+  • Gautam Kumar Mishra  |  Roll No: 2024PGCSCA104
+  • Sumit Paul           |  Roll No: 2024PGCSCA013
+  • Rahul Bhandari       |  Roll No: 2024PGCSCA037
 
-[WHAT SPEAKER 1 SHOULD SAY]:
+[WHAT GAUTAM KUMAR MISHRA SHOULD SAY]:
 "Good morning, respected professors, external examiner, and dear friends. 
-Today, my teammates and I are proud to present our final academic project titled: 'AI-Based Image Deblurring Using a Custom Deep Learning Model.'
+We are Gautam Kumar Mishra, Sumit Paul, and Rahul Bhandari. Today, we are proud to present our final academic project titled: 'AI-Based Image Deblurring Using a Custom Deep Learning Model.'
 
-Every one of us has taken a photo on our phone only to find it ruined by hand tremor, low lighting, or a moving subject. In this project, we designed, built, and trained our own deep learning model from scratch to solve this exact problem: restoring blurry, degraded photographs back into clear, sharp images.
+Every one of us has taken a photo on our phone only to find it ruined by hand shake or a moving subject. In this project, we designed, built, and trained our own neural network from scratch to solve this exact problem: restoring blurry, degraded photographs back into clear, sharp images.
 
-Over the next twelve minutes, we will explain the mathematics behind blur, walk you through our custom lightweight convolutional neural network called DeblurNet-Lite, show our real training and quantitative evaluation results, and demonstrate our live web application. 
+Over the next twelve minutes, we will walk you through our custom lightweight convolutional neural network called DeblurNet-Lite, explain our training on CPU hardware, show our test set results with a +6.12 dB PSNR gain, and demonstrate our live Streamlit web application. 
 
 With that, let us begin by understanding what image blur actually is."
 
@@ -306,32 +306,40 @@ We also designed the application to be lightweight enough for zero-cost deployme
 "Finally, let us review the limitations, future enhancements, and conclusion."
 
 --------------------------------------------------------------------------------
-SLIDE 12: LIMITATIONS, FUTURE WORK & CONCLUSION
+SLIDE 12: LIMITATIONS AND FUTURE SCOPE
 --------------------------------------------------------------------------------
 [SLIDE CONTENT]:
-- Honest Project Limitations:
-  * Extreme motion blur: When displacement exceeds the receptive field (> 20 pixels), restoration creates slight softness.
-  * Patch-based training: High-resolution images (4K) must be processed via tiling to avoid CPU memory spikes.
-- Future Scope:
-  * Implementing Perceptual Loss (VGG feature loss) to sharpen ultra-fine textures.
-  * Adding attention mechanisms (e.g. lightweight Channel Attention).
-  * Video deblurring by incorporating temporal frames.
-- Key Takeaways & Conclusion:
-  * Built a custom 293K parameter neural network completely from scratch.
-  * Successfully trained on CPU hardware with 4 GB RAM in 6 minutes.
-  * Achieved +3.53 dB PSNR gain and +0.1975 SSIM improvement.
-  * Delivered a complete, functioning, and deployable AI system.
+- Identified Limitations:
+  * Receptive field bounds: Optimized for blur lengths 5-9 px; extreme shake (> 20 px) results in softened edges.
+  * Tiling needed for ultra-large 4K images on CPU.
+- Future Work:
+  * Perceptual loss using VGG feature layers.
+  * Squeeze-and-Excitation channel attention.
+  * Temporal video deblurring using sequential frames.
 
-[WHAT SPEAKER 3 SHOULD SAY]:
-"To conclude our presentation, we believe in honest academic rigor, so we must document our model's limitations:
-Because our model was optimized for a 4 GB RAM CPU laptop, its receptive field is designed for moderate motion blur. If a camera experiences violent motion exceeding 20 pixels of displacement, the model produces smooth edges rather than ultra-sharp recovery. 
+[WHAT RAHUL BHANDARI SHOULD SAY]:
+"For academic honesty, we document our model's limitations: for extreme motion exceeding 20 pixels of blur, the compact receptive field produces softer edges. 
+In future work, we plan to incorporate VGG perceptual loss, add channel attention, and extend the system to video deblurring using temporal frames."
 
-In future work, we plan to incorporate Perceptual Loss using deep feature maps from VGG networks, add lightweight Channel Attention, and extend the model to process sequential frames for video deblurring.
+[TRANSITION TO SLIDE 13]:
+"With that, we conclude our presentation."
 
-In summary:
-We set out to demystify image deblurring. We did not download a black-box pretrained model. We designed DeblurNet-Lite, trained it from randomly initialized weights on a modest 4 GB RAM laptop, verified genuine mathematical improvement with +3.53 dB PSNR gain, and wrapped it in a user-friendly web application.
+--------------------------------------------------------------------------------
+SLIDE 13: END PAGE (THANK YOU!)
+--------------------------------------------------------------------------------
+[SLIDE CONTENT]:
+THANK YOU!
+Any Questions or Discussion?
+Presented By:
+  • Gautam Kumar Mishra  |  Roll No: 2024PGCSCA104
+  • Sumit Paul           |  Roll No: 2024PGCSCA013
+  • Rahul Bhandari       |  Roll No: 2024PGCSCA037
+Project Repository: https://github.com/aryannikhil68/ImagedeBlur
 
-Thank you very much for your time and attention. We are now eager and ready to take your questions!"
+[WHAT RAHUL BHANDARI SHOULD SAY]:
+"In conclusion, we built DeblurNet-Lite completely from scratch without pretrained weights, trained it in 6.6 minutes on our 4 GB CPU laptop, and achieved a +6.12 dB PSNR gain and 0.92 SSIM on unseen test images. 
+
+Thank you very much for your time and guidance, respected professors. Gautam, Sumit, and I are now eager and ready to answer all your questions!"
 ================================================================================
 END OF PRESENTATION SCRIPT
 ================================================================================
